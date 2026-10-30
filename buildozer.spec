@@ -9,6 +9,9 @@ package.name = pixelarteditor
 # (str) Package domain (needed for android packaging)
 package.domain = org.pixelart
 
+# (str) Version of your application
+version = 0.1
+
 # (list) Source files to include (let it include all python files)
 source.include_exts = py,png,jpg,kv,atlas
 
