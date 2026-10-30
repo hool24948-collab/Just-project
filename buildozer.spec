@@ -12,6 +12,9 @@ package.domain = org.pixelart
 # (str) Version of your application
 version = 0.1
 
+# (str) Source code where the main.py is located
+source.dir = .
+
 # (list) Source files to include (let it include all python files)
 source.include_exts = py,png,jpg,kv,atlas
 
