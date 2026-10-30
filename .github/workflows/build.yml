@@ -1,30 +1,58 @@
-[app]
+name: Build Android APK
 
-# (str) Title of your application
-title = Pixel Art Editor
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
 
-# (str) Package name
-package.name = pixelarteditor
+jobs:
+  build:
+    runs-on: ubuntu-22.04
 
-# (str) Package domain (needed for android packaging)
-package.domain = org.pixelart
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-# (list) Source files to include (let it include all python files)
-source.include_exts = py,png,jpg,kv,atlas
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-# (list) Application requirements
-requirements = python3,kivy
+      - name: Check project files
+        run: |
+          echo "Checking project..."
+          ls -la
+          test -f buildozer.spec || {
+            echo "ERROR: buildozer.spec not found!"
+            exit 1
+          }
+          test -f main.py || {
+            echo "ERROR: main.py not found!"
+            exit 1
+          }
 
-# (str) Supported orientations
-orientation = portrait
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git zip unzip openjdk-17-jdk python3-pip \
+            autoconf libtool pkg-config zlib1g-dev libncurses5-dev \
+            libncursesw5-dev libsqlite3-dev libreadline-dev libssl-dev \
+            libffi-dev libbz2-dev
 
-# (list) Permissions
-android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
+      - name: Upgrade pip and install buildozer
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade Cython==0.29.36 buildozer
 
-[buildozer]
+      - name: Build APK
+        run: |
+          buildozer -v android debug
 
-# (int) Log level (0 = error, 1 = info, 2 = debug (with command output))
-log_level = 2
-
-# (int) Display warning if buildozer is run as root (0 = False, 1 = True)
-warn_on_root = 1
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pixelart-apk
+          path: bin/*.apk
+          if-no-files-found: error
+          retention-days: 14
