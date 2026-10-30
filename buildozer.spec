@@ -15,7 +15,7 @@ version = 0.1
 # (str) Source code where the main.py is located
 source.dir = .
 
-# (list) Source files to include (let it include all python files)
+# (list) Source files to include
 source.include_exts = py,png,jpg,kv,atlas
 
 # (list) Application requirements
@@ -27,16 +27,19 @@ orientation = portrait
 # (int) Target Android API
 android.api = 33
 
-# (int) Minimum API your APK will support
+# (int) Minimum API supported
 android.minapi = 21
+
+# (str) Android SDK Build Tools version (исправляет ошибку Aidl not found)
+android.sdk_build_tools_version = 33.0.2
 
 # (list) Permissions
 android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 
 [buildozer]
 
-# (int) Log level (0 = error, 1 = info, 2 = debug (with command output))
+# (int) Log level (0 = error, 1 = info, 2 = debug)
 log_level = 2
 
-# (int) Display warning if buildozer is run as root (0 = False, 1 = True)
+# (int) Display warning if buildozer is run as root
 warn_on_root = 1
