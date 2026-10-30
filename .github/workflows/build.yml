@@ -13,12 +13,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build with Buildozer
-        uses: ejwa/buildozer-action@v0.20
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          cmake_version: 3.22.1
-          target: android
-          debug: true
+          python-version: '3.10'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential git zip unzip openjdk-17-jdk \
+            autoconf libtool pkg-config zlib1g-dev libncurses5-dev \
+            libncursesw5-dev libsqlite3-dev libreadline-dev libssl-dev \
+            libffi-dev libbz2-dev
+
+      - name: Install Buildozer and Cython
+        run: |
+          pip install --upgrade pip
+          pip install --user Cython==0.29.36 buildozer
+
+      - name: Build APK with Buildozer
+        run: |
+          ~/.local/bin/buildozer -v android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
