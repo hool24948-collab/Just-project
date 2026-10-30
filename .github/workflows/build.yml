@@ -13,15 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build APK with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
+      - name: Build with Buildozer
+        uses: ejwa/buildozer-action@v0.20
         with:
-          command: buildozer -v android debug
-          buildozer_version: stable
+          cmake_version: 3.22.1
+          target: android
+          debug: true
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: python-pixelart-apk
-          path: ${{ steps.buildozer.outputs.filename }}
+          name: pixelart-apk
+          path: bin/*.apk
