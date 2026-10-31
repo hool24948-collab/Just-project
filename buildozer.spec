@@ -30,8 +30,11 @@ android.api = 33
 # (int) Minimum API supported
 android.minapi = 21
 
-# (str) Android SDK Build Tools version (исправляет ошибку Aidl not found)
+# (str) Android SDK Build Tools version
 android.sdk_build_tools_version = 33.0.2
+
+# (str) Android NDK version to use (стабильная версия для компиляции расширений)
+android.ndk = 25b
 
 # (list) Permissions
 android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
