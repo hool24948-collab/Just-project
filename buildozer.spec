@@ -42,7 +42,7 @@ android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 [buildozer]
 
 # (int) Log level (0 = error, 1 = info, 2 = debug)
-log_level = 2
+log_level = 1
 
 # (int) Display warning if buildozer is run as root
 warn_on_root = 1
